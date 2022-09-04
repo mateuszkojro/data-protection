@@ -26,7 +26,7 @@ void TestVigenere() {
 
   std::string encrypted = VigenereCypher(messgae, key);
   MK_ASSERT_EQ(
-      encrypted, DecipherVigenereCypher(encrypted, key),
+      messgae, DecipherVigenereCypher(encrypted, key),
       "Vigenere cypher encrypted and decrypted message should be the same");
 }
 
