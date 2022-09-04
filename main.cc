@@ -34,9 +34,21 @@ void TestVigenere() {
 }
 
 void TestModPower() {
-  int a = 5, b = 6, c = 10;
+  {
+  int a = 2, b = 2, c = 3;
   MK_ASSERT_EQ(ModPower(a, b, c), Pow(a, b) % c,
                "a^b % c should be equal optimised modulo power");
+  }
+  {
+    int a = 5, b = 13, c = 4;
+    MK_ASSERT_EQ(ModPower(a, b, c), Pow(a, b) % c,
+                 "a^b % c should be equal optimised modulo power");
+  }
+  {
+    int a = 123, b = 3, c = 12;
+    MK_ASSERT_EQ(ModPower(a, b, c), Pow(a, b) % c,
+                 "a^b % c should be equal optimised modulo power");
+  }
 }
 
 void TestExtendedEuclid() {
@@ -47,8 +59,8 @@ void TestExtendedEuclid() {
 
 void TestIsMerseneNumberPrime() {
   // Reference values from: https://www.mersenne.org/primes/
-  //  MK_ASSERT_EQ(IsMerseneNumberPrime(2), true, ""); //FIXME(mkojro) Not
-  //  working for 2
+  // FIXME(mkojro) Not working for 2
+  //  MK_ASSERT_EQ(IsMerseneNumberPrime(2), true, "");
   MK_ASSERT_EQ(IsMerseneNumberPrime(4), false, "");
   MK_ASSERT_EQ(IsMerseneNumberPrime(11), false, "");
   MK_ASSERT_EQ(IsMerseneNumberPrime(13), true, "");
@@ -106,6 +118,6 @@ int main() {
     return 0;
   } else {
     std::cout << "FAIL: Tests failed: " << tests_failed << std::endl;
-    return 1;
+    return tests_failed;
   }
 }

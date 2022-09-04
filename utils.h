@@ -16,17 +16,26 @@
   } while (false);
 
 uint64_t Pow(uint64_t base, uint64_t exponent) {
-  if (exponent == 0) {
-    return 1;
+  uint64_t result = 1;
+  for(size_t i = 0; i < exponent; i++) {
+    result *= base;
   }
-  if (exponent == 1) {
-    return base;
-  }
-  for (int i = 0; i < exponent; i++) {
-    base *= base;
-  }
-
-  return base;
+  return result;
 }
+
+uint64_t Pow2(uint64_t exponent) {
+  return 1ull << exponent;
+}
+
+template <class T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& iterable) {
+  os << "{ ";
+  for (const auto& elem : iterable) {
+    os << elem << ',';
+  }
+  os << " }";
+  return os;
+}
+
 
 static bool IsValidChar(char c) { return c >= 'a' && c <= 'z'; }
