@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 
+#include "diffie_hellman_key_exchange.h"
 #include "extended_euclid.h"
 #include "modulo_power.h"
 #include "sito_erastotenesa.h"
@@ -46,16 +47,50 @@ void TestExtendedEuclid() {
 
 void TestIsMerseneNumberPrime() {
   // Reference values from: https://www.mersenne.org/primes/
-//  MK_ASSERT_EQ(IsMerseneNumberPrime(2), true, ""); //FIXME(mkojro) Not working for 2
+  //  MK_ASSERT_EQ(IsMerseneNumberPrime(2), true, ""); //FIXME(mkojro) Not
+  //  working for 2
   MK_ASSERT_EQ(IsMerseneNumberPrime(4), false, "");
   MK_ASSERT_EQ(IsMerseneNumberPrime(11), false, "");
   MK_ASSERT_EQ(IsMerseneNumberPrime(13), true, "");
   MK_ASSERT_EQ(IsMerseneNumberPrime(17), true, "");
 }
 
+void TestDiffieHellmanKeyExchange() {
+  // Implementing key exchange from:
+  // https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange#Cryptographic_explanation
+
+  // 1. Alice and Bob publicly agree to use a modulus p = 23 and base g = 5
+  // (which is a primitive root modulo 23).
+  int p = 23;
+  int g = 5;
+
+  // 2. Alice chooses a secret integer a = 4, then sends Bob A = g^a mod p
+  int a = 4;
+  int public_message_to_bob = APowBModC(g, a, p);
+  int A = public_message_to_bob;
+
+  // 3. Bob chooses a secret integer b = 3, then sends Alice B = g^b mod p
+  int b = 3;
+  int public_message_to_alice = APowBModC(g, b, p);
+  int B = public_message_to_alice;
+
+  // 4. Alice computes s = B^a mod p
+  int alice_secret = APowBModC(B, a, p);
+
+  // 5. Bob computes s = A^b mod p
+  int bob_secret = APowBModC(A, b, p);
+
+  MK_ASSERT_EQ(alice_secret, bob_secret, "Alice and bob should share a common secret");
+  MK_ASSERT_EQ(alice_secret, 18, "The secret in this example should be 18");
+}
+
 int main() {
-  auto tests = {TestCesarCypher, TestVigenere, TestModPower, TestExtendedEuclid,
-                TestIsMerseneNumberPrime};
+  auto tests = {TestCesarCypher,
+                TestVigenere,
+                TestModPower,
+                TestExtendedEuclid,
+                TestIsMerseneNumberPrime,
+                TestDiffieHellmanKeyExchange};
   int tests_failed = 0;
   for (auto test : tests) {
     try {
