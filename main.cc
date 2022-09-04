@@ -24,10 +24,12 @@ void TestCesarCypher() {
 }
 
 void TestVigenere() {
-  std::string messgae = "helloworld";
+  std::string messgae = "aaa";
   std::string key = "abc";
 
   std::string encrypted = VigenereCypher(messgae, key);
+  MK_ASSERT_EQ(encrypted, "bcd", "");
+
   MK_ASSERT_EQ(
       messgae, DecipherVigenereCypher(encrypted, key),
       "Vigenere cypher encrypted and decrypted message should be the same");
