@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 #define MK_ASSERT_EQ(expr1, expr2, message)                           \
   do {                                                                \
