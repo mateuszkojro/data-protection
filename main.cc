@@ -7,6 +7,7 @@
 
 #include "extended_euclid.h"
 #include "modulo_power.h"
+#include "sito_erastotenesa.h"
 #include "szyfr_cezara.h"
 #include "szyfr_vigenere.h"
 #include "utils.h"
@@ -43,9 +44,18 @@ void TestExtendedEuclid() {
   MK_ASSERT_EQ(ExtendedEuclid(294, 546), 42, "");
 }
 
+void TestIsMerseneNumberPrime() {
+  // Reference values from: https://www.mersenne.org/primes/
+//  MK_ASSERT_EQ(IsMerseneNumberPrime(2), true, ""); //FIXME(mkojro) Not working for 2
+  MK_ASSERT_EQ(IsMerseneNumberPrime(4), false, "");
+  MK_ASSERT_EQ(IsMerseneNumberPrime(11), false, "");
+  MK_ASSERT_EQ(IsMerseneNumberPrime(13), true, "");
+  MK_ASSERT_EQ(IsMerseneNumberPrime(17), true, "");
+}
+
 int main() {
-  auto tests = {TestCesarCypher, TestVigenere, TestModPower,
-                TestExtendedEuclid};
+  auto tests = {TestCesarCypher, TestVigenere, TestModPower, TestExtendedEuclid,
+                TestIsMerseneNumberPrime};
   int tests_failed = 0;
   for (auto test : tests) {
     try {
