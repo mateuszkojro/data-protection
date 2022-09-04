@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <string>
 
+#include "extended_euclid.h"
 #include "modulo_power.h"
 #include "szyfr_cezara.h"
 #include "szyfr_vigenere.h"
@@ -36,8 +37,15 @@ void TestModPower() {
                "a^b % c should be equal optimised modulo power");
 }
 
+void TestExtendedEuclid() {
+  MK_ASSERT_EQ(ExtendedEuclid(10, 5), 5, "");
+  MK_ASSERT_EQ(ExtendedEuclid(125, 225), 25, "");
+  MK_ASSERT_EQ(ExtendedEuclid(294, 546), 42, "");
+}
+
 int main() {
-  auto tests = {TestCesarCypher, TestVigenere, TestModPower};
+  auto tests = {TestCesarCypher, TestVigenere, TestModPower,
+                TestExtendedEuclid};
   int tests_failed = 0;
   for (auto test : tests) {
     try {
