@@ -52,15 +52,6 @@ std::map<uint64_t, std::vector<uint64_t>> CreateRainbowTable(
   return rainbow_table;
 }
 
-template <class T>
-void PrintIterable(T iterable, std::ostream& ostream = std::cout) {
-  std::cout << "{ ";
-  for (const auto& elem : iterable) {
-    ostream << elem << ',';
-  }
-  std::cout << " }";
-}
-
 void TryBreak(uint64_t hash, size_t width, size_t height,
               const std::map<uint64_t, std::vector<uint64_t>>& table) {
   for (size_t y = 0; y < height; y++) {
@@ -72,7 +63,7 @@ void TryBreak(uint64_t hash, size_t width, size_t height,
         for (size_t i = 0; i < width - x; i++) {
           found_string = ReverseDJB(DJB(found_string));
         }
-        PrintIterable(found_string);
+        std::cout << found_string << std::endl;
       }
     }
   }
