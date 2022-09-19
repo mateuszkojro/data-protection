@@ -24,7 +24,7 @@ uint64_t DJB(const std::vector<uint64_t>& str) {
   uint64_t hash = 5381;
 
   for (auto c : str) {
-    hash = ((hash << 5) + hash) + c;
+    hash = 33 * hash + c;
   }
 
   return hash;
